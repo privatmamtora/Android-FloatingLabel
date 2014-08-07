@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Float Labeled Edittext Example</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="userName_hint">User Name</string>
+    <string name="password_hint">Password</string>
+
+</resources>
