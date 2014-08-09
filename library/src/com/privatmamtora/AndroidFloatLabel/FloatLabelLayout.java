@@ -55,10 +55,9 @@ public class FloatLabelLayout extends FrameLayout {
     int mLabelGap;
     int mLabelGravity;
     int mLabelSidePadding;
-    int mLabelTrigger;
     int mLabelAppearance;
+    int mLabelAnimationDuration;
 
-    private Trigger mTrigger;
     private CharSequence mHint;
 
     private Context mContext;
@@ -82,39 +81,38 @@ public class FloatLabelLayout extends FrameLayout {
         mContext = context;
         setAttributes(attrs);
         initialize();
+    }
 
+    private void setAttributes(AttributeSet attrs) {
+        final TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.FloatLabelLayout);
+        try {
+            mLabelAppearance = a.getResourceId(R.styleable.FloatLabelLayout_flTextAppearance, android.R.style.TextAppearance_Small);
+            mLabelSidePadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flSidePadding, dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP));
+
+            mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flGapSize, 0);
+            mLabelGravity = a.getInt(R.styleable.FloatLabelLayout_flGravity, 0x03);
+
+            mLabelAnimationDuration = a.getInt(R.styleable.FloatLabelLayout_flAnimationDuaration, -1);
+        } finally {
+            a.recycle();
+        }
     }
 
     private void initialize() {
 
-        if (isInEditMode()) {
-            return;
-        }
-
         mLabel = new TextView(mContext);
 
-        mLabel.setPadding(mLabelSidePadding, 0, mLabelSidePadding, 0);
-        mLabel.setVisibility(INVISIBLE);
+        // Set style first so that everything else will overwrite it
         mLabel.setTextAppearance(mContext, mLabelAppearance);
+
+        mLabel.setPadding(mLabelSidePadding, 0, mLabelSidePadding, 0);
+
         mLabel.setGravity(mLabelGravity);
 
-        mTrigger = Trigger.fromValue(mLabelTrigger);
+        mLabel.setSingleLine();
 
-        addView(mLabel, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    }
-
-    private void setAttributes(AttributeSet attrs) {
-        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FloatLabelLayout);
-
-        try {
-            mLabelAppearance = a.getResourceId(R.styleable.FloatLabelLayout_floatLabelTextAppearance, android.R.style.TextAppearance_Small);
-            mLabelTrigger = a.getInt(R.styleable.FloatLabelLayout_floatLabelTrigger, Trigger.TYPE.getValue());
-            mLabelSidePadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_floatLabelSidePadding, dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP));
-            mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_floatLabelGapSize, 0);
-            mLabelGravity = a.getInt(R.styleable.FloatLabelLayout_floatLabelGravity, 0x03);
-        } finally {
-            a.recycle();
-        }
+        mLabel.setVisibility(INVISIBLE);
+        addView(mLabel, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
 
     @Override
@@ -159,6 +157,7 @@ public class FloatLabelLayout extends FrameLayout {
             // Update the layout params so that the EditText is at the bottom, with enough top
             // margin to show the label
             final LayoutParams lp = new LayoutParams(params);
+
             lp.gravity = Gravity.BOTTOM;
             lp.topMargin = (int) mLabel.getTextSize() + mLabelGap;
             params = lp;
@@ -185,12 +184,6 @@ public class FloatLabelLayout extends FrameLayout {
         // Add focus listener to the EditText so that we can notify the label that it is activated.
         // Allows the use of a ColorStateList for the text color on the label
         mEditText.setOnFocusChangeListener(mOnFocusChangeListener);
-
-        // if view already had focus we need to manually call the listener
-        if (mTrigger == Trigger.FOCUS && mEditText.isFocused()) {
-            mOnFocusChangeListener.onFocusChange(mEditText, true);
-        }
-
     }
 
     /**
@@ -238,6 +231,10 @@ public class FloatLabelLayout extends FrameLayout {
                     mLabel.setVisibility(show ? VISIBLE : INVISIBLE);
                 }
             });
+
+            if(mLabelAnimationDuration >= 0) {
+                animation.setDuration(mLabelAnimationDuration);
+            }
             animation.start();
         }
     }
@@ -250,25 +247,21 @@ public class FloatLabelLayout extends FrameLayout {
                 getResources().getDisplayMetrics());
     }
 
-    private static boolean isIcsOrAbove() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
-    }
-
-    private OnFocusChangeListener mOnFocusChangeListener = new OnFocusChangeListener() {
+    /**
+     * Listeners
+     */
+    final private OnFocusChangeListener mOnFocusChangeListener = new OnFocusChangeListener() {
         @Override
         public void onFocusChange(View view, boolean focused) {
-            mLabel.setActivated(focused);
+            if(isHcOrAbove()) {
+                mLabel.setActivated(focused);
+            }
         }
     };
 
-    private TextWatcher mTextWatcher = new TextWatcher() {
-
+    final private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void afterTextChanged(Editable s) {
-            // only takes affect if mTrigger is set to TYPE
-            if (mTrigger != Trigger.TYPE) {
-                return;
-            }
             showLabel(s.length() != 0);
         }
 
@@ -282,29 +275,14 @@ public class FloatLabelLayout extends FrameLayout {
 
     };
 
-    public static enum Trigger {
-        TYPE(0),
-        FOCUS(1);
+    /**
+     * Helper method to simplify version checking.
+     */
+    private static boolean isIcsOrAbove() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+    }
 
-        private final int mValue;
-
-        private Trigger(int i) {
-            mValue = i;
-        }
-
-        public int getValue() {
-            return mValue;
-        }
-
-        public static Trigger fromValue(int value) {
-            Trigger[] triggers = Trigger.values();
-            for (int i = 0; i < triggers.length; i++) {
-                if (triggers[i].getValue() == value) {
-                    return triggers[i];
-                }
-            }
-
-            throw new IllegalArgumentException(value + " is not a valid value for " + Trigger.class.getSimpleName());
-        }
+    private static boolean isHcOrAbove() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 }

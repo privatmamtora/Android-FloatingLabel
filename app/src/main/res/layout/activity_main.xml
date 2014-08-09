@@ -13,33 +13,30 @@
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        float:floatLabelTrigger="text"
-        float:floatLabelTextAppearance="@style/TextAppearance.YourApp.FloatLabel">
+        float:flAnimationDuaration="800"
+        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
-            android:id="@+id/edit_username"
+            android:id="@+id/e1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/userName_hint"
-            android:singleLine="true"
-            android:inputType="textNoSuggestions"
-            android:imeOptions="actionNext"
-            android:nextFocusDown="@+id/edit_password" />
+            android:hint="MultiLine/Style/AniDur"
+            android:inputType="textNoSuggestions|textMultiLine"
+            android:singleLine="false"/>
     </com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
 
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        float:floatLabelTrigger="text"
-        float:floatLabelTextAppearance="@style/TextAppearance.YourApp.FloatLabel">
+        float:flGravity="right"
+        float:flSidePadding="15dp"
+        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
-            android:id="@+id/edit_password"
+            android:id="@+id/e2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password_hint"
+            android:hint="GravRight/Padd/Style"
             android:singleLine="true"
             android:inputType="textNoSuggestions"
             android:imeOptions="actionDone" />
@@ -48,16 +45,30 @@
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        float:floatLabelGravity="center"
-        float:floatLabelTrigger="text"
-        float:floatLabelTextAppearance="@style/TextAppearance.YourApp.FloatLabel">
+        float:flGravity="center"
+        float:flGapSize="10dp"
+        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
-            android:id="@+id/edit_grav"
+            android:id="@+id/e3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Gravity Center"
+            android:hint="GravCen/Gap/Style"
+            android:singleLine="true"
+            android:inputType="textNoSuggestions"
+            android:imeOptions="actionDone" />
+    </com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
+
+    <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+
+        <EditText
+            android:id="@+id/e4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Style"
             android:singleLine="true"
             android:inputType="textNoSuggestions"
             android:imeOptions="actionDone" />
