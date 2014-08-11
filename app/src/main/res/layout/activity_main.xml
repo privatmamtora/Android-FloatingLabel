@@ -60,6 +60,7 @@
     </com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
 
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
+        android:id="@+id/f4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         float:flTextAppearance="@style/TextAppearance.example.FloatLabel">

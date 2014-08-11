@@ -46,8 +46,40 @@
 
         <!--Text Appearance Attributes-->
         <attr name="flTextAppearance" format="reference" />
-
+        <!-- Typeface (normal, sans, serif, monospace) for the text. -->
+        <!--<attr name="flTypeface">
+			<enum name="normal" value="0" />
+			<enum name="sans" value="1" />
+			<enum name="serif" value="2" />
+			<enum name="monospace" value="3" />
+		</attr>-->
+        <!-- Style (bold, italic, bolditalic) for the text. -->
+        <!--<attr name="flTextStyle">
+			<flag name="normal" value="0" />
+			<flag name="bold" value="1" />
+			<flag name="italic" value="2" />
+		</attr>-->
+        <!-- Font family (named by string) for the text. -->
+        <!--<attr name="flFontFamily" format="string" />-->
+		
+		<!-- Color of label text. -->
+		<attr name="flTextColor" format="reference|color" />
+		<!-- Color of label text when unfocused. -->
+		<attr name="flUnFocusTextColor" format="reference|color" />
+		<!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
+        <attr name="flTextSize" format="dimension" />
+		
+        <!-- Place a shadow of the specified color behind the text. -->
+        <attr name="flShadowColor" format="color" />
+        <!-- Horizontal offset of the shadow. -->
+        <attr name="flShadowDx" format="float" />
+        <!-- Vertical offset of the shadow. -->
+        <attr name="flShadowDy" format="float" />
+        <!-- Radius of the shadow. -->
+        <attr name="flShadowRadius" format="float" />
+		
         <!--Label Animation Attributes-->
         <attr name="flAnimationDuaration" format="integer" />
+		
     </declare-styleable>
 </resources>

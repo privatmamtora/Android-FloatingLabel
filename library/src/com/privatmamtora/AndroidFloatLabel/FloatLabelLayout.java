@@ -22,6 +22,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -57,6 +58,7 @@ public class FloatLabelLayout extends FrameLayout {
     int mLabelSidePadding;
     int mLabelAppearance;
     int mLabelAnimationDuration;
+
 
     private CharSequence mHint;
 
@@ -103,15 +105,14 @@ public class FloatLabelLayout extends FrameLayout {
         mLabel = new TextView(mContext);
 
         // Set style first so that everything else will overwrite it
-        mLabel.setTextAppearance(mContext, mLabelAppearance);
+        setLabelAppearance(mContext, mLabelAppearance);
+        setLabelSingleLine(true);
 
-        mLabel.setPadding(mLabelSidePadding, 0, mLabelSidePadding, 0);
+        setLabelPadding(mLabelSidePadding, 0, mLabelSidePadding, 0);
 
-        mLabel.setGravity(mLabelGravity);
+        setLabelGravity(mLabelGravity);
 
-        mLabel.setSingleLine();
-
-        mLabel.setVisibility(INVISIBLE);
+        setLabelVisibility(INVISIBLE);
         addView(mLabel, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
 
@@ -130,13 +131,7 @@ public class FloatLabelLayout extends FrameLayout {
             Bundle bundle = (Bundle) state;
 
             int vis = bundle.getInt(SAVED_LABEL_VISIBILITY);
-            if(vis == View.GONE) {
-                mLabel.setVisibility(View.GONE);
-            } else if(vis == View.INVISIBLE) {
-                mLabel.setVisibility(View.INVISIBLE);
-            } else {
-                mLabel.setVisibility(View.VISIBLE);
-            }
+            setLabelVisibility(vis);
 
             mHint = bundle.getCharSequence(SAVED_HINT);
 
@@ -172,7 +167,7 @@ public class FloatLabelLayout extends FrameLayout {
     protected void setEditText(EditText editText) {
         mEditText = editText;
 
-        mLabel.setText(mEditText.getHint());
+        setLabelText(mEditText.getHint());
 
         if (mHint == null) {
             mHint = mEditText.getHint();
@@ -239,6 +234,40 @@ public class FloatLabelLayout extends FrameLayout {
         }
     }
 
+    /**
+     * Label helper function
+     */
+    public void setLabelTypeFace(Typeface tf) {
+        mLabel.setTypeface(tf);
+    }
+
+    public void setLabelTypeFace(Typeface tf, int style) {
+        mLabel.setTypeface(tf, style);
+    }
+
+    public void setLabelAppearance(Context c, int styleResourceId) {
+        mLabel.setTextAppearance(c, styleResourceId);
+    }
+
+    public void setLabelPadding(int left, int top, int right, int bottom) {
+        mLabel.setPadding(left, top, right, bottom);
+    }
+
+    public void setLabelGravity(int gravity) {
+        mLabel.setGravity(gravity);
+    }
+
+    public void setLabelSingleLine(boolean singleLine) {
+        mLabel.setSingleLine(singleLine);
+    }
+
+    public void setLabelVisibility(int visibility) {
+        mLabel.setVisibility(visibility);
+    }
+
+    public void setLabelText(CharSequence text) {
+        mLabel.setText(text);
+    }
     /**
      * Helper method to convert dips to pixels.
      */

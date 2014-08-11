@@ -1,9 +1,12 @@
 package com.privatmamtora.example.AndroidFloatLabel;
 
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.privatmamtora.AndroidFloatLabel.FloatLabelLayout;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,8 +15,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        FloatLabelLayout f = (FloatLabelLayout) findViewById(R.id.f4);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "RobotoCondensed-LightItalic.ttf");
+        f.setLabelTypeFace(typeface);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
