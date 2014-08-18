@@ -21,6 +21,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -71,10 +72,12 @@ public class FloatLabelLayout extends FrameLayout {
     int mLabelPaddingEnd;
 
     int mLabelAppearance;
-    int mLabelAnimationDuration;
     int mTypeface;
     String mFontFamily;
     int mTextStyle;
+    private ColorStateList mLabelColor;
+
+    int mLabelAnimationDuration;
 
     private CharSequence mHint;
 
@@ -124,6 +127,8 @@ public class FloatLabelLayout extends FrameLayout {
             mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flGapSize, 0);
             mLabelGravity = a.getInt(R.styleable.FloatLabelLayout_flGravity, 0x03);
 
+            mLabelColor = a.getColorStateList(R.styleable.FloatLabelLayout_flTextColor);
+
             mLabelAnimationDuration = a.getInt(R.styleable.FloatLabelLayout_flAnimationDuration, -1);
         } finally {
             a.recycle();
@@ -148,6 +153,7 @@ public class FloatLabelLayout extends FrameLayout {
         }
 
         setLabelGravity(mLabelGravity);
+        mLabel.setTextColor(mLabelColor != null ? mLabelColor : getResources().getColorStateList(R.color.floatlabel_default));
 
         setLabelVisibility(INVISIBLE);
         addView(mLabel, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);

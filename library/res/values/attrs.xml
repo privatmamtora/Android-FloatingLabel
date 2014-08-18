@@ -14,6 +14,8 @@
         </attr>
         <!-- Style (bold, italic, bolditalic) for the text. -->
         <attr name="flTextStyle" />
+        <!-- Color of label text. -->
+        <attr name="flTextColor" format="reference|color" />
 
         <!--TextView Layout Positioning Attributes-->
         <attr name="flPadding" format="reference|dimension" />
@@ -29,8 +31,6 @@
         <attr name="flGravity" />
 
 
-		<!-- Color of label text. -->
-        <attr name="flTextColor" format="reference|color" />
 		<!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
         <attr name="flTextSize" />
 
