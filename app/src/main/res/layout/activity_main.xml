@@ -13,10 +13,10 @@
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        float:animationDuaration="800"
-        float:textStyle="italic|bold"
-        float:textSize="16sp"
-        float:textAppearance="@style/TextAppearance.example.FloatLabel">
+        float:flAnimationDuration="800"
+        float:flTextStyle="italic|bold"
+        float:flTextSize="16sp"
+        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
             android:id="@+id/e1"
@@ -30,9 +30,10 @@
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        float:gravity="right"
-        float:sidePadding="15dp"
-        float:textAppearance="@style/TextAppearance.example.FloatLabel">
+        float:flGravity="right"
+        float:flPaddingLeft="15dp"
+        float:flPaddingRight="15dp"
+        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
             android:id="@+id/e2"
@@ -47,9 +48,9 @@
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        float:gravity="center"
-        float:gapSize="10dp"
-        float:textAppearance="@style/TextAppearance.example.FloatLabel">
+        float:flGravity="center"
+        float:flGapSize="10dp"
+        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
             android:id="@+id/e3"
@@ -65,7 +66,7 @@
         android:id="@+id/f4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        float:textAppearance="@style/TextAppearance.example.FloatLabel">
+        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
             android:id="@+id/e4"

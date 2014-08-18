@@ -60,7 +60,16 @@ public class FloatLabelLayout extends FrameLayout {
 
     int mLabelGap;
     int mLabelGravity;
-    int mLabelSidePadding;
+    //int mLabelSidePadding;
+
+    int mLabelPadding;
+    int mLabelPaddingLeft;
+    int mLabelPaddingRight;
+    int mLabelPaddingTop;
+    int mLabelPaddingBottom;
+    int mLabelPaddingStart;
+    int mLabelPaddingEnd;
+
     int mLabelAppearance;
     int mLabelAnimationDuration;
     int mTypeface;
@@ -95,17 +104,27 @@ public class FloatLabelLayout extends FrameLayout {
     private void setAttributes(AttributeSet attrs) {
         final TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.FloatLabelLayout);
         try {
-            mLabelAppearance = a.getResourceId(R.styleable.FloatLabelLayout_textAppearance, android.R.style.TextAppearance_Small);
-            mFontFamily = a.getString(R.styleable.FloatLabelLayout_fontFamily);
-            mTypeface = a.getInt(R.styleable.FloatLabelLayout_typeface, -1);
-            mTextStyle = a.getInt(R.styleable.FloatLabelLayout_textStyle, -1);
+            mLabelAppearance = a.getResourceId(R.styleable.FloatLabelLayout_flTextAppearance, android.R.style.TextAppearance_Small);
+            mFontFamily = a.getString(R.styleable.FloatLabelLayout_flFontFamily);
+            mTypeface = a.getInt(R.styleable.FloatLabelLayout_flTypeface, -1);
+            mTextStyle = a.getInt(R.styleable.FloatLabelLayout_flTextStyle, -1);
 
-            mLabelSidePadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_sidePadding, dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP));
+            mLabelPadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPadding, 0);
+            mLabelPaddingLeft = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingLeft, mLabelPadding == 0 ? dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP) : mLabelPadding);
+            mLabelPaddingRight = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingRight, mLabelPadding == 0 ? dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP) : mLabelPadding);
+            mLabelPaddingTop = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingTop, mLabelPadding);
+            mLabelPaddingBottom = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingBottom, mLabelPadding);
 
-            mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_gapSize, 0);
-            mLabelGravity = a.getInt(R.styleable.FloatLabelLayout_gravity, 0x03);
+            if(isJb1OrAbove()) {
+                mLabelPaddingStart = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingStart, mLabelPadding == 0 ? dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP) : mLabelPadding);
+                mLabelPaddingEnd = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingEnd, mLabelPadding == 0 ? dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP) : mLabelPadding);
+            }
 
-            mLabelAnimationDuration = a.getInt(R.styleable.FloatLabelLayout_animationDuaration, -1);
+            //mLabelSidePadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_sidePadding, dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP));
+            mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flGapSize, 0);
+            mLabelGravity = a.getInt(R.styleable.FloatLabelLayout_flGravity, 0x03);
+
+            mLabelAnimationDuration = a.getInt(R.styleable.FloatLabelLayout_flAnimationDuration, -1);
         } finally {
             a.recycle();
         }
@@ -119,9 +138,14 @@ public class FloatLabelLayout extends FrameLayout {
         setLabelAppearance(mContext, mLabelAppearance);
         setTypefaceFromAttrs(mFontFamily, mTypeface, mTextStyle);
 
+        //Default Label is Single Line
         setLabelSingleLine(true);
 
-        setLabelPadding(mLabelSidePadding, 0, mLabelSidePadding, 0);
+        if(isJb1OrAbove()) {
+            setLabelPaddingRelative(mLabelPaddingStart, mLabelPaddingTop, mLabelPaddingEnd, mLabelPaddingBottom);
+        } else {
+            setLabelPadding(mLabelPaddingLeft, mLabelPaddingTop, mLabelPaddingRight, mLabelPaddingBottom);
+        }
 
         setLabelGravity(mLabelGravity);
 
@@ -292,6 +316,11 @@ public class FloatLabelLayout extends FrameLayout {
         mLabel.setPadding(left, top, right, bottom);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void setLabelPaddingRelative(int start, int top, int end, int bottom) {
+        mLabel.setPaddingRelative(start, top, end, bottom);
+    }
+
     public void setLabelGravity(int gravity) {
         mLabel.setGravity(gravity);
     }
@@ -344,8 +373,12 @@ public class FloatLabelLayout extends FrameLayout {
     };
 
     /**
-     * Helper method to simplify version checking.
+     * Method to simplify version checking.
      */
+    private static boolean isJb1OrAbove() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
+    }
+
     private static boolean isIcsOrAbove() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
     }
@@ -353,4 +386,5 @@ public class FloatLabelLayout extends FrameLayout {
     private static boolean isHcOrAbove() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
+
 }

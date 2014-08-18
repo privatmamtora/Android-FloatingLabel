@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="FloatLabelLayout">
-        <!--Layout Positioning Attributes-->
-        <attr name="sidePadding" format="reference|dimension" />
-        <attr name="gapSize" format="reference|dimension" />
-
-        <!-- Specifies how an object should position its content, on both the X and Y axes,
-         within its own bounds.  -->
-        <attr name="gravity" />
-
         <!--Text Appearance Attributes-->
-        <attr name="textAppearance" format="reference" />
+        <attr name="flTextAppearance" format="reference" />
+        <!-- Font family (named by string) for the text. -->
+        <attr name="flFontFamily" format="string" />
         <!-- Typeface (normal, sans, serif, monospace) for the text. -->
-        <attr name="typeface">
+        <attr name="flTypeface">
             <enum name="normal" value="0" />
             <enum name="sans" value="1" />
             <enum name="serif" value="2" />
             <enum name="monospace" value="3" />
         </attr>
         <!-- Style (bold, italic, bolditalic) for the text. -->
-        <attr name="textStyle" />
-        <!-- Font family (named by string) for the text. -->
-        <attr name="fontFamily" format="string" />
-		
+        <attr name="flTextStyle" />
+
+        <!--TextView Layout Positioning Attributes-->
+        <attr name="flPadding" format="reference|dimension" />
+        <attr name="flPaddingLeft" format="reference|dimension" />
+        <attr name="flPaddingRight" format="reference|dimension" />
+        <attr name="flPaddingTop" format="reference|dimension" />
+        <attr name="flPaddingBottom" format="reference|dimension" />
+        <attr name="flPaddingStart" format="reference|dimension" />
+        <attr name="flPaddingEnd" format="reference|dimension" />
+        <attr name="flGapSize" format="reference|dimension" />
+        <!-- Specifies how an object should position its content, on both the X and Y axes,
+         within its own bounds.  -->
+        <attr name="flGravity" />
+
+
 		<!-- Color of label text. -->
-        <attr name="textColor" format="reference|color" />
+        <attr name="flTextColor" format="reference|color" />
 		<!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
-        <attr name="textSize" />
+        <attr name="flTextSize" />
 
         <!-- Place a shadow of the specified color behind the text. -->
-        <attr name="shadowColor" format="color" />
+        <attr name="flShadowColor" format="color" />
         <!-- Horizontal offset of the shadow. -->
-        <attr name="shadowDx" format="float" />
+        <attr name="flShadowDx" format="float" />
         <!-- Vertical offset of the shadow. -->
-        <attr name="shadowDy" format="float" />
+        <attr name="flShadowDy" format="float" />
         <!-- Radius of the shadow. -->
-        <attr name="shadowRadius" format="float" />
+        <attr name="flShadowRadius" format="float" />
         <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
         <!--<attr name="textAllCaps" format="boolean" />-->
 
         <!--Label Animation Attributes-->
-        <attr name="animationDuaration" format="integer" />
+        <attr name="flAnimationDuration" format="integer" />
 
     </declare-styleable>
 
     <!-- Style (bold, italic, bolditalic) for the text. -->
-    <attr name="textStyle">
+    <attr name="flTextStyle">
         <flag name="normal" value="0" />
         <flag name="bold" value="1" />
         <flag name="italic" value="2" />
@@ -53,7 +59,7 @@
 
     <!-- Specifies how an object should position its content, on both the X and Y axes,
          within its own bounds.  -->
-    <attr name="gravity">
+    <attr name="flGravity">
         <!-- Push object to the top of its container, not changing its size. -->
         <flag name="top" value="0x30" />
         <!-- Push object to the bottom of its container, not changing its size. -->
@@ -90,5 +96,5 @@
         <flag name="end" value="0x00800005" />
     </attr>
 
-    <attr name="textSize" format="dimension" />
+    <attr name="flTextSize" format="dimension" />
 </resources>
