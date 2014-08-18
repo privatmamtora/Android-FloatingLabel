@@ -13,8 +13,10 @@
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        float:flAnimationDuaration="800"
-        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+        float:animationDuaration="800"
+        float:textStyle="italic"
+        float:textSize="16sp"
+        float:textAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
             android:id="@+id/e1"
@@ -28,9 +30,9 @@
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        float:flGravity="right"
-        float:flSidePadding="15dp"
-        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+        float:gravity="right"
+        float:sidePadding="15dp"
+        float:textAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
             android:id="@+id/e2"
@@ -45,9 +47,9 @@
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        float:flGravity="center"
-        float:flGapSize="10dp"
-        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+        float:gravity="center"
+        float:gapSize="10dp"
+        float:textAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
             android:id="@+id/e3"
@@ -63,7 +65,7 @@
         android:id="@+id/f4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+        float:textAppearance="@style/TextAppearance.example.FloatLabel">
 
         <EditText
             android:id="@+id/e4"

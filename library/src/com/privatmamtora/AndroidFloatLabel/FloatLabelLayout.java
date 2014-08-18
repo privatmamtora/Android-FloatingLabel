@@ -50,6 +50,11 @@ public class FloatLabelLayout extends FrameLayout {
     private static final String SAVED_LABEL_VISIBILITY = "SAVED_LABEL_VISIBILITY";
     private static final String SAVED_HINT = "SAVED_HINT";
 
+    // Enum for the "typeface" XML parameter.
+    private static final int SANS = 1;
+    private static final int SERIF = 2;
+    private static final int MONOSPACE = 3;
+
     private EditText mEditText;
     private TextView mLabel;
 
@@ -58,7 +63,9 @@ public class FloatLabelLayout extends FrameLayout {
     int mLabelSidePadding;
     int mLabelAppearance;
     int mLabelAnimationDuration;
-
+    int mTypeface;
+    String mFontFamily;
+    int mTextStyle;
 
     private CharSequence mHint;
 
@@ -88,13 +95,17 @@ public class FloatLabelLayout extends FrameLayout {
     private void setAttributes(AttributeSet attrs) {
         final TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.FloatLabelLayout);
         try {
-            mLabelAppearance = a.getResourceId(R.styleable.FloatLabelLayout_flTextAppearance, android.R.style.TextAppearance_Small);
-            mLabelSidePadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flSidePadding, dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP));
+            mLabelAppearance = a.getResourceId(R.styleable.FloatLabelLayout_textAppearance, android.R.style.TextAppearance_Small);
+            mFontFamily = a.getString(R.styleable.FloatLabelLayout_fontFamily);
+            mTypeface = a.getInt(R.styleable.FloatLabelLayout_typeface, -1);
+            mTextStyle = a.getInt(R.styleable.FloatLabelLayout_textStyle, -1);
 
-            mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flGapSize, 0);
-            mLabelGravity = a.getInt(R.styleable.FloatLabelLayout_flGravity, 0x03);
+            mLabelSidePadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_sidePadding, dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP));
 
-            mLabelAnimationDuration = a.getInt(R.styleable.FloatLabelLayout_flAnimationDuaration, -1);
+            mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_gapSize, 0);
+            mLabelGravity = a.getInt(R.styleable.FloatLabelLayout_gravity, 0x03);
+
+            mLabelAnimationDuration = a.getInt(R.styleable.FloatLabelLayout_animationDuaration, -1);
         } finally {
             a.recycle();
         }
@@ -106,6 +117,8 @@ public class FloatLabelLayout extends FrameLayout {
 
         // Set style first so that everything else will overwrite it
         setLabelAppearance(mContext, mLabelAppearance);
+        setTypefaceFromAttrs(mFontFamily, mTypeface, mTextStyle);
+
         setLabelSingleLine(true);
 
         setLabelPadding(mLabelSidePadding, 0, mLabelSidePadding, 0);
@@ -234,14 +247,40 @@ public class FloatLabelLayout extends FrameLayout {
         }
     }
 
+    private void setTypefaceFromAttrs(String familyName, int typefaceIndex, int styleIndex) {
+        Typeface tf = null;
+        if (familyName != null) {
+            tf = Typeface.create(familyName, styleIndex);
+            if (tf != null) {
+                setLabelTypeface(tf);
+                return;
+            }
+        }
+        switch (typefaceIndex) {
+            case SANS:
+                tf = Typeface.SANS_SERIF;
+                break;
+
+            case SERIF:
+                tf = Typeface.SERIF;
+                break;
+
+            case MONOSPACE:
+                tf = Typeface.MONOSPACE;
+                break;
+        }
+
+        setLabelTypeface(tf, styleIndex);
+    }
+
     /**
      * Label helper function
      */
-    public void setLabelTypeFace(Typeface tf) {
+    public void setLabelTypeface(Typeface tf) {
         mLabel.setTypeface(tf);
     }
 
-    public void setLabelTypeFace(Typeface tf, int style) {
+    public void setLabelTypeface(Typeface tf, int style) {
         mLabel.setTypeface(tf, style);
     }
 

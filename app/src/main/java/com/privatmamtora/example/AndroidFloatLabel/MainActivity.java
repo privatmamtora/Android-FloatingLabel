@@ -18,7 +18,7 @@ public class MainActivity extends ActionBarActivity {
 
         FloatLabelLayout f = (FloatLabelLayout) findViewById(R.id.f4);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "RobotoCondensed-LightItalic.ttf");
-        f.setLabelTypeFace(typeface);
+        f.setLabelTypeface(typeface);
     }
 
     @Override
