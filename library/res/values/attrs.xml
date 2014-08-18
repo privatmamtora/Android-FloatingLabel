@@ -11,9 +11,13 @@
 
         <!--Text Appearance Attributes-->
         <attr name="textAppearance" format="reference" />
-
         <!-- Typeface (normal, sans, serif, monospace) for the text. -->
-        <attr name="typeface" />
+        <attr name="typeface">
+            <enum name="normal" value="0" />
+            <enum name="sans" value="1" />
+            <enum name="serif" value="2" />
+            <enum name="monospace" value="3" />
+        </attr>
         <!-- Style (bold, italic, bolditalic) for the text. -->
         <attr name="textStyle" />
         <!-- Font family (named by string) for the text. -->
@@ -45,14 +49,6 @@
         <flag name="normal" value="0" />
         <flag name="bold" value="1" />
         <flag name="italic" value="2" />
-    </attr>
-
-    <!-- Typeface (normal, sans, serif, monospace) for the text. -->
-    <attr name="typeface">
-        <enum name="normal" value="0" />
-        <enum name="sans" value="1" />
-        <enum name="serif" value="2" />
-        <enum name="monospace" value="3" />
     </attr>
 
     <!-- Specifies how an object should position its content, on both the X and Y axes,

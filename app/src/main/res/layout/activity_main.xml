@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         float:animationDuaration="800"
-        float:textStyle="italic"
+        float:textStyle="italic|bold"
         float:textSize="16sp"
         float:textAppearance="@style/TextAppearance.example.FloatLabel">
 
