@@ -22,6 +22,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -44,8 +45,8 @@ import android.widget.TextView;
  */
 public class FloatLabelLayout extends FrameLayout {
 
-    private static final long ANIMATION_DURATION = 150;
-    private static final float DEFAULT_PADDING_LEFT_RIGHT_DP = 12f;
+    //private static final long ANIMATION_DURATION = 150;
+    //private static final float DEFAULT_PADDING_LEFT_RIGHT_DP = 12f;
 
     private static final String SAVED_SUPER_STATE = "SAVED_SUPER_STATE";
     private static final String SAVED_LABEL_VISIBILITY = "SAVED_LABEL_VISIBILITY";
@@ -60,7 +61,6 @@ public class FloatLabelLayout extends FrameLayout {
     private TextView mLabel;
 
     int mLabelGap;
-    int mLabelGravity;
     //int mLabelSidePadding;
 
     int mLabelPadding;
@@ -68,14 +68,26 @@ public class FloatLabelLayout extends FrameLayout {
     int mLabelPaddingRight;
     int mLabelPaddingTop;
     int mLabelPaddingBottom;
-    int mLabelPaddingStart;
-    int mLabelPaddingEnd;
+    //int mLabelPaddingStart;
+    //int mLabelPaddingEnd;
 
     int mLabelAppearance;
-    int mTypeface;
-    String mFontFamily;
-    int mTextStyle;
-    private ColorStateList mLabelColor;
+    // Text Appearance
+    int mLabelHighlight;
+    private ColorStateList mLabelTextColor;
+    int mLabelTextSize;
+    int mLabelTypeface;
+    String mLabelFontFamily;
+    int mLabelTextStyle;
+    boolean mLabelAllCaps;
+    int mLabelShadowColor;
+    float mLabelShadowDx;
+    float mLabelShadowDy;
+    float mLabelShadowRadius;
+
+    int mLabelGravity;
+    CharSequence mLabelText = "";
+    int mLabelEllipsize;
 
     int mLabelAnimationDuration;
 
@@ -86,14 +98,12 @@ public class FloatLabelLayout extends FrameLayout {
     public FloatLabelLayout(Context context) {
         super(context);
         mContext = context;
-        initialize();
     }
 
     public FloatLabelLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         setAttributes(attrs);
-        initialize();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -101,59 +111,173 @@ public class FloatLabelLayout extends FrameLayout {
         super(context, attrs, defStyle);
         mContext = context;
         setAttributes(attrs);
-        initialize();
     }
 
     private void setAttributes(AttributeSet attrs) {
+        final Resources.Theme theme = mContext.getTheme();
         final TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.FloatLabelLayout);
-        try {
-            mLabelAppearance = a.getResourceId(R.styleable.FloatLabelLayout_flTextAppearance, android.R.style.TextAppearance_Small);
-            mFontFamily = a.getString(R.styleable.FloatLabelLayout_flFontFamily);
-            mTypeface = a.getInt(R.styleable.FloatLabelLayout_flTypeface, -1);
-            mTextStyle = a.getInt(R.styleable.FloatLabelLayout_flTextStyle, -1);
 
-            mLabelPadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPadding, 0);
-            mLabelPaddingLeft = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingLeft, mLabelPadding == 0 ? dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP) : mLabelPadding);
-            mLabelPaddingRight = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingRight, mLabelPadding == 0 ? dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP) : mLabelPadding);
-            mLabelPaddingTop = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingTop, mLabelPadding);
-            mLabelPaddingBottom = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingBottom, mLabelPadding);
-
-            if(isJb1OrAbove()) {
-                mLabelPaddingStart = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingStart, mLabelPadding == 0 ? dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP) : mLabelPadding);
-                mLabelPaddingEnd = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingEnd, mLabelPadding == 0 ? dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP) : mLabelPadding);
-            }
-
-            //mLabelSidePadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_sidePadding, dipsToPix(DEFAULT_PADDING_LEFT_RIGHT_DP));
-            mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flGapSize, 0);
-            mLabelGravity = a.getInt(R.styleable.FloatLabelLayout_flGravity, 0x03);
-
-            mLabelColor = a.getColorStateList(R.styleable.FloatLabelLayout_flTextColor);
-
-            mLabelAnimationDuration = a.getInt(R.styleable.FloatLabelLayout_flAnimationDuration, -1);
-        } finally {
-            a.recycle();
+        TypedArray appearance = null;
+        int ap = a.getResourceId(R.styleable.FloatLabelLayout_flTextAppearance, -1);
+        if (ap != -1) {
+            appearance = theme.obtainStyledAttributes(
+                    ap, com.android.internal.R.styleable.TextAppearance);
         }
-    }
+        if (appearance != null) {
+            int n = appearance.getIndexCount();
+            for (int i = 0; i < n; i++) {
+                int attr = appearance.getIndex(i);
 
-    private void initialize() {
+                /*if (attr == com.android.internal.R.styleable.TextAppearance_textColorHighlight) {
+                    mLabelHighlight = appearance.getColor(attr, 0);
+
+                } else*/
+                if (attr == com.android.internal.R.styleable.TextAppearance_textColor) {
+                    mLabelTextColor = appearance.getColorStateList(attr);
+
+                /*} else if (attr == com.android.internal.R.styleable.TextAppearance_textColorHint) {
+                    //ColorStateList textColorHint = appearance.getColorStateList(attr);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_textColorLink) {
+                    //ColorStateList textColorLink = appearance.getColorStateList(attr);
+                */
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_textSize) {
+                    mLabelTextSize = appearance.getDimensionPixelSize(attr, 15);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_typeface) {
+                    mLabelTypeface = appearance.getInt(attr, -1);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_fontFamily) {
+                    mLabelFontFamily = appearance.getString(attr);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_textStyle) {
+                    mLabelTextStyle = appearance.getInt(attr, -1);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_textAllCaps) {
+                    mLabelAllCaps = appearance.getBoolean(attr, false);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_shadowColor) {
+                    mLabelShadowColor = a.getInt(attr, 0);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_shadowDx) {
+                    mLabelShadowDx = a.getFloat(attr, 0);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_shadowDy) {
+                    mLabelShadowDy = a.getFloat(attr, 0);
+
+                } else if (attr == com.android.internal.R.styleable.TextAppearance_shadowRadius) {
+                    mLabelShadowRadius = a.getFloat(attr, 0);
+
+                }
+            }
+            appearance.recycle();
+        }
+
+        int n = a.getIndexCount();
+        for (int i = 0; i < n; i++) {
+            int attr = a.getIndex(i);
+
+            //TextAppearance Attributes
+            if (attr == R.styleable.FloatLabelLayout_flTextColor) {
+                mLabelTextColor = a.getColorStateList(attr);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flTextSize) {
+                mLabelTextSize = a.getDimensionPixelSize(attr, mLabelTextSize);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flTypeface) {
+                mLabelTypeface = a.getInt(attr, mLabelTypeface);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flTextStyle) {
+                mLabelTextStyle = a.getInt(attr, mLabelTextStyle);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flFontFamily) {
+                mLabelFontFamily = a.getString(attr);
+
+            } else if(attr == R.styleable.FloatLabelLayout_flTextAllCaps) {
+                mLabelAllCaps = a.getBoolean(attr, false);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flShadowColor) {
+                mLabelShadowColor = a.getInt(attr, 0);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flShadowDx) {
+                mLabelShadowDx = a.getFloat(attr, 0);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flShadowDy) {
+                mLabelShadowDy = a.getFloat(attr, 0);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flShadowRadius) {
+                mLabelShadowRadius = a.getFloat(attr, 0);
+
+            //TextView or View Attributes
+            } else if (attr == R.styleable.FloatLabelLayout_flGravity) {
+                setLabelGravity(a.getInt(attr, 0x03));
+
+            } else if (attr == R.styleable.FloatLabelLayout_flText) {
+                mLabelText = a.getText(attr);
+
+            }  else if (attr == R.styleable.FloatLabelLayout_flScrollHorizontally) {
+                if (a.getBoolean(attr, false)) {
+                    setLabelHorizontallyScrolling(true);
+                }
+
+            } else if (attr == R.styleable.FloatLabelLayout_flEllipsize) {
+                mLabelEllipsize = a.getInt(attr, -1);
+
+            } else if (attr == R.styleable.FloatLabelLayout_flIncludeFontPadding) {
+                if (!a.getBoolean(attr, true)) {
+                    setLabelIncludeFontPadding(false);
+                }
+
+            } else if (attr == R.styleable.FloatLabelLayout_flTextScaleX) {
+                setLabelTextScaleX(a.getFloat(attr, 1.0f));
+
+            } else if (attr == R.styleable.FloatLabelLayout_flPadding) {
+                mLabelPadding = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPadding, 0);
+            } else if (attr == R.styleable.FloatLabelLayout_flPaddingLeft) {
+                mLabelPaddingLeft = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingLeft, mLabelPadding);
+            } else if (attr == R.styleable.FloatLabelLayout_flPaddingRight) {
+                mLabelPaddingRight = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingRight, mLabelPadding);
+            } else if (attr == R.styleable.FloatLabelLayout_flPaddingTop) {
+                mLabelPaddingTop = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingTop, mLabelPadding);
+            } else if (attr == R.styleable.FloatLabelLayout_flPaddingBottom) {
+                mLabelPaddingBottom = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingBottom, mLabelPadding);
+            /*} else if (attr == R.styleable.FloatLabelLayout_flPaddingStart) {
+                mLabelPaddingStart = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingStart, mLabelPadding);
+            } else if (attr == R.styleable.FloatLabelLayout_flPaddingEnd) {
+                mLabelPaddingEnd = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flPaddingEnd, mLabelPadding);*/
+            } else if (attr == R.styleable.FloatLabelLayout_flGapSize) {
+                mLabelGap = a.getDimensionPixelSize(R.styleable.FloatLabelLayout_flGapSize, 0);
+            } else if (attr == R.styleable.FloatLabelLayout_flAnimationDuration) {
+                mLabelAnimationDuration = a.getInt(R.styleable.FloatLabelLayout_flAnimationDuration, -1);
+            }
+        }
+        a.recycle();
 
         mLabel = new TextView(mContext);
-
-        // Set style first so that everything else will overwrite it
-        setLabelAppearance(mContext, mLabelAppearance);
-        setTypefaceFromAttrs(mFontFamily, mTypeface, mTextStyle);
 
         //Default Label is Single Line
         setLabelSingleLine(true);
 
-        if(isJb1OrAbove()) {
-            setLabelPaddingRelative(mLabelPaddingStart, mLabelPaddingTop, mLabelPaddingEnd, mLabelPaddingBottom);
+        // Set style first so that everything else will overwrite it
+        // setLabelAppearance(mContext, mLabelAppearance);
+        setTypefaceFromAttrs(mLabelFontFamily, mLabelTypeface, mLabelTextStyle);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            /*switch (getLayoutDirection()) {
+                case LAYOUT_DIRECTION_LTR:
+                    setLabelPadding();
+                    break;
+                case LAYOUT_DIRECTION_RTL:
+                    setLabelPadding(mLabelPaddingRight, mLabelPaddingTop, mLabelPaddingLeft, mLabelPaddingBottom);
+                    break;
+            }*/
+            setLabelPaddingRelative(mLabelPaddingLeft, mLabelPaddingTop, mLabelPaddingRight, mLabelPaddingBottom);
         } else {
             setLabelPadding(mLabelPaddingLeft, mLabelPaddingTop, mLabelPaddingRight, mLabelPaddingBottom);
         }
 
         setLabelGravity(mLabelGravity);
-        mLabel.setTextColor(mLabelColor != null ? mLabelColor : getResources().getColorStateList(R.color.floatlabel_default));
+        mLabel.setTextColor(mLabelTextColor != null ? mLabelTextColor : getResources().getColorStateList(R.color.floatlabel_default));
 
         setLabelVisibility(INVISIBLE);
         addView(mLabel, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -316,6 +440,18 @@ public class FloatLabelLayout extends FrameLayout {
 
     public void setLabelAppearance(Context c, int styleResourceId) {
         mLabel.setTextAppearance(c, styleResourceId);
+    }
+
+    public void setLabelHorizontallyScrolling(boolean whether) {
+        mLabel.setHorizontallyScrolling(whether);
+    }
+
+    public void setLabelTextScaleX(float size) {
+        mLabel.setTextScaleX(size);
+    }
+
+    public void setLabelIncludeFontPadding(boolean includepad) {
+        mLabel.setIncludeFontPadding(includepad);
     }
 
     public void setLabelPadding(int left, int top, int right, int bottom) {

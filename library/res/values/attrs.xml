@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="FloatLabelLayout">
+        <!-- Specifies how an object should position its content, on both the X and Y axes,
+         within its own bounds.  -->
+        <attr name="flGravity" />
+        <!-- Text to display. -->
+        <attr name="flText" format="string" localization="suggested" />
+        <!-- Whether the text is allowed to be wider than the view (and
+             therefore can be scrolled horizontally). -->
+        <attr name="flScrollHorizontally" format="boolean" />
+        <!-- If set, causes words that are longer than the view is wide
+             to be ellipsized instead of broken in the middle.
+             You will often also want to set scrollHorizontally or singleLine
+             as well so that the text as a whole is also constrained to
+             a single line instead of still allowed to be broken onto
+             multiple lines. -->
+        <attr name="flEllipsize" />
+        <!-- Leave enough room for ascenders and descenders instead of
+             using the font ascent and descent strictly.  (Normally true). -->
+        <attr name="flIncludeFontPadding" format="boolean" />
+        <!-- Sets the horizontal scaling factor for the text. -->
+        <attr name="flTextScaleX" format="float" />
+
         <!--Text Appearance Attributes-->
         <attr name="flTextAppearance" format="reference" />
         <!-- Font family (named by string) for the text. -->
@@ -16,6 +37,8 @@
         <attr name="flTextStyle" />
         <!-- Color of label text. -->
         <attr name="flTextColor" format="reference|color" />
+        <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
+        <attr name="flTextAllCaps" />
 
         <!--TextView Layout Positioning Attributes-->
         <attr name="flPadding" format="reference|dimension" />
@@ -23,14 +46,9 @@
         <attr name="flPaddingRight" format="reference|dimension" />
         <attr name="flPaddingTop" format="reference|dimension" />
         <attr name="flPaddingBottom" format="reference|dimension" />
-        <attr name="flPaddingStart" format="reference|dimension" />
-        <attr name="flPaddingEnd" format="reference|dimension" />
+        <!--<attr name="flPaddingStart" format="reference|dimension" />
+        <attr name="flPaddingEnd" format="reference|dimension" />-->
         <attr name="flGapSize" format="reference|dimension" />
-        <!-- Specifies how an object should position its content, on both the X and Y axes,
-         within its own bounds.  -->
-        <attr name="flGravity" />
-
-
 		<!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
         <attr name="flTextSize" />
 
@@ -97,4 +115,13 @@
     </attr>
 
     <attr name="flTextSize" format="dimension" />
+
+    <!-- Where to ellipsize text. -->
+    <attr name="flEllipsize">
+        <enum name="none" value="0" />
+        <enum name="start" value="1" />
+        <enum name="middle" value="2" />
+        <enum name="end" value="3" />
+        <!--<enum name="marquee" value="4" />-->
+    </attr>
 </resources>
