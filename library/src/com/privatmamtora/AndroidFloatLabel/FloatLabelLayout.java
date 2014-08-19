@@ -29,6 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -258,26 +259,29 @@ public class FloatLabelLayout extends FrameLayout {
         //Default Label is Single Line
         setLabelSingleLine(true);
 
-        // Set style first so that everything else will overwrite it
-        // setLabelAppearance(mContext, mLabelAppearance);
+        if (mLabelEllipsize < 0) {
+            mLabelEllipsize = 3; // END
+        }
+
+        if (mLabelEllipsize == 1) {
+            setLabelEllipsize(TextUtils.TruncateAt.START);
+        } else if (mLabelEllipsize == 2) {
+            setLabelEllipsize(TextUtils.TruncateAt.MIDDLE);
+        } else if (mLabelEllipsize == 3) {
+            setLabelEllipsize(TextUtils.TruncateAt.END);
+        }
+
+        setLabelColor(mLabelTextColor != null ? mLabelTextColor : getResources().getColorStateList(R.color.floatlabel_default));
+
         setTypefaceFromAttrs(mLabelFontFamily, mLabelTypeface, mLabelTextStyle);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            /*switch (getLayoutDirection()) {
-                case LAYOUT_DIRECTION_LTR:
-                    setLabelPadding();
-                    break;
-                case LAYOUT_DIRECTION_RTL:
-                    setLabelPadding(mLabelPaddingRight, mLabelPaddingTop, mLabelPaddingLeft, mLabelPaddingBottom);
-                    break;
-            }*/
             setLabelPaddingRelative(mLabelPaddingLeft, mLabelPaddingTop, mLabelPaddingRight, mLabelPaddingBottom);
         } else {
             setLabelPadding(mLabelPaddingLeft, mLabelPaddingTop, mLabelPaddingRight, mLabelPaddingBottom);
         }
 
         setLabelGravity(mLabelGravity);
-        mLabel.setTextColor(mLabelTextColor != null ? mLabelTextColor : getResources().getColorStateList(R.color.floatlabel_default));
 
         setLabelVisibility(INVISIBLE);
         addView(mLabel, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -461,6 +465,18 @@ public class FloatLabelLayout extends FrameLayout {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void setLabelPaddingRelative(int start, int top, int end, int bottom) {
         mLabel.setPaddingRelative(start, top, end, bottom);
+    }
+
+    public void setLabelEllipsize(TextUtils.TruncateAt where) {
+        mLabel.setEllipsize(where);
+    }
+
+    public void setLabelColor(int color) {
+        mLabel.setTextColor(color);
+    }
+
+    public void setLabelColor(ColorStateList colors) {
+        mLabel.setTextColor(colors);
     }
 
     public void setLabelGravity(int gravity) {
