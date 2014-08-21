@@ -16,7 +16,7 @@
         float:flAnimationDuration="800"
         float:flTextStyle="italic|bold"
         float:flTextSize="16sp"
-        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+        float:flTextAppearance="@style/FloatLabel">
 
         <EditText
             android:id="@+id/e1"
@@ -32,8 +32,8 @@
         android:layout_height="wrap_content"
         float:flGravity="right"
         float:flPaddingLeft="15dp"
-        float:flPaddingRight="15dp"
-        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+        float:flPaddingRight="@dimen/right_padding"
+        float:flTextAppearance="@style/FloatLabel">
 
         <EditText
             android:id="@+id/e2"
@@ -50,7 +50,8 @@
         android:layout_height="wrap_content"
         float:flGravity="center"
         float:flGapSize="10dp"
-        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+        float:flTextStyle="bold"
+        float:flTextAppearance="@style/FloatLabel">
 
         <EditText
             android:id="@+id/e3"
@@ -59,14 +60,13 @@
             android:hint="GravCen/Gap/Style"
             android:singleLine="true"
             android:inputType="textNoSuggestions"
-            android:imeOptions="actionDone" />
+            android:imeOptions="actionDone"/>
     </com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
 
     <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
         android:id="@+id/f4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        float:flTextAppearance="@style/TextAppearance.example.FloatLabel">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/e4"

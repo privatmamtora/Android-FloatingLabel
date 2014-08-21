@@ -3,7 +3,42 @@
     <declare-styleable name="FloatLabelLayout">
         <!-- Specifies how an object should position its content, on both the X and Y axes,
          within its own bounds.  -->
-        <attr name="flGravity" />
+        <attr name="flGravity">
+            <!-- Push object to the top of its container, not changing its size. -->
+            <flag name="top" value="0x30" />
+            <!-- Push object to the bottom of its container, not changing its size. -->
+            <flag name="bottom" value="0x50" />
+            <!-- Push object to the left of its container, not changing its size. -->
+            <flag name="left" value="0x03" />
+            <!-- Push object to the right of its container, not changing its size. -->
+            <flag name="right" value="0x05" />
+            <!-- Place object in the vertical center of its container, not changing its size. -->
+            <flag name="center_vertical" value="0x10" />
+            <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill_vertical" value="0x70" />
+            <!-- Place object in the horizontal center of its container, not changing its size. -->
+            <flag name="center_horizontal" value="0x01" />
+            <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
+            <flag name="fill_horizontal" value="0x07" />
+            <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
+            <flag name="center" value="0x11" />
+            <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill" value="0x77" />
+            <!-- Additional option that can be set to have the top and/or bottom edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the vertical gravity: a top gravity will clip the bottom
+                 edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
+            <flag name="clip_vertical" value="0x80" />
+            <!-- Additional option that can be set to have the left and/or right edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the horizontal gravity: a left gravity will clip the right
+                 edge, a right gravity will clip the left edge, and neither will clip both edges. -->
+            <flag name="clip_horizontal" value="0x08" />
+            <!-- Push object to the beginning of its container, not changing its size. -->
+            <flag name="start" value="0x00800003" />
+            <!-- Push object to the end of its container, not changing its size. -->
+            <flag name="end" value="0x00800005" />
+        </attr>
         <!-- Text to display. -->
         <attr name="flText" format="string" localization="suggested" />
         <!-- Whether the text is allowed to be wider than the view (and
@@ -15,7 +50,14 @@
              as well so that the text as a whole is also constrained to
              a single line instead of still allowed to be broken onto
              multiple lines. -->
-        <attr name="flEllipsize" />
+        <!-- Where to ellipsize text. -->
+        <attr name="flEllipsize">
+            <enum name="none" value="0" />
+            <enum name="start" value="1" />
+            <enum name="middle" value="2" />
+            <enum name="end" value="3" />
+            <!--<enum name="marquee" value="4" />-->
+        </attr>
         <!-- Leave enough room for ascenders and descenders instead of
              using the font ascent and descent strictly.  (Normally true). -->
         <attr name="flIncludeFontPadding" format="boolean" />
@@ -34,23 +76,25 @@
             <enum name="monospace" value="3" />
         </attr>
         <!-- Style (bold, italic, bolditalic) for the text. -->
-        <attr name="flTextStyle" />
+        <attr name="flTextStyle">
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr>
         <!-- Color of label text. -->
         <attr name="flTextColor" format="reference|color" />
-        <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
-        <attr name="flTextAllCaps" />
 
         <!--TextView Layout Positioning Attributes-->
-        <attr name="flPadding" format="reference|dimension" />
-        <attr name="flPaddingLeft" format="reference|dimension" />
-        <attr name="flPaddingRight" format="reference|dimension" />
-        <attr name="flPaddingTop" format="reference|dimension" />
-        <attr name="flPaddingBottom" format="reference|dimension" />
+        <attr name="flPadding" format="dimension" />
+        <attr name="flPaddingLeft" format="dimension" />
+        <attr name="flPaddingRight" format="dimension" />
+        <attr name="flPaddingTop" format="dimension" />
+        <attr name="flPaddingBottom" format="dimension" />
         <!--<attr name="flPaddingStart" format="reference|dimension" />
         <attr name="flPaddingEnd" format="reference|dimension" />-->
         <attr name="flGapSize" format="reference|dimension" />
 		<!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
-        <attr name="flTextSize" />
+        <attr name="flTextSize" format="dimension" />
 
         <!-- Place a shadow of the specified color behind the text. -->
         <attr name="flShadowColor" format="color" />
@@ -61,67 +105,32 @@
         <!-- Radius of the shadow. -->
         <attr name="flShadowRadius" format="float" />
         <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
-        <!--<attr name="textAllCaps" format="boolean" />-->
+        <attr name="flTextAllCaps" format="boolean" />
 
         <!--Label Animation Attributes-->
         <attr name="flAnimationDuration" format="integer" />
-
     </declare-styleable>
 
-    <!-- Style (bold, italic, bolditalic) for the text. -->
-    <attr name="flTextStyle">
-        <flag name="normal" value="0" />
-        <flag name="bold" value="1" />
-        <flag name="italic" value="2" />
-    </attr>
-
-    <!-- Specifies how an object should position its content, on both the X and Y axes,
-         within its own bounds.  -->
-    <attr name="flGravity">
-        <!-- Push object to the top of its container, not changing its size. -->
-        <flag name="top" value="0x30" />
-        <!-- Push object to the bottom of its container, not changing its size. -->
-        <flag name="bottom" value="0x50" />
-        <!-- Push object to the left of its container, not changing its size. -->
-        <flag name="left" value="0x03" />
-        <!-- Push object to the right of its container, not changing its size. -->
-        <flag name="right" value="0x05" />
-        <!-- Place object in the vertical center of its container, not changing its size. -->
-        <flag name="center_vertical" value="0x10" />
-        <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
-        <flag name="fill_vertical" value="0x70" />
-        <!-- Place object in the horizontal center of its container, not changing its size. -->
-        <flag name="center_horizontal" value="0x01" />
-        <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
-        <flag name="fill_horizontal" value="0x07" />
-        <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
-        <flag name="center" value="0x11" />
-        <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
-        <flag name="fill" value="0x77" />
-        <!-- Additional option that can be set to have the top and/or bottom edges of
-             the child clipped to its container's bounds.
-             The clip will be based on the vertical gravity: a top gravity will clip the bottom
-             edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
-        <flag name="clip_vertical" value="0x80" />
-        <!-- Additional option that can be set to have the left and/or right edges of
-             the child clipped to its container's bounds.
-             The clip will be based on the horizontal gravity: a left gravity will clip the right
-             edge, a right gravity will clip the left edge, and neither will clip both edges. -->
-        <flag name="clip_horizontal" value="0x08" />
-        <!-- Push object to the beginning of its container, not changing its size. -->
-        <flag name="start" value="0x00800003" />
-        <!-- Push object to the end of its container, not changing its size. -->
-        <flag name="end" value="0x00800005" />
-    </attr>
-
-    <attr name="flTextSize" format="dimension" />
-
-    <!-- Where to ellipsize text. -->
-    <attr name="flEllipsize">
-        <enum name="none" value="0" />
-        <enum name="start" value="1" />
-        <enum name="middle" value="2" />
-        <enum name="end" value="3" />
-        <!--<enum name="marquee" value="4" />-->
-    </attr>
+    <declare-styleable name="TextAppearance">
+        <!-- Text color. -->
+        <attr name="android:textColor" />
+        <!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
+        <attr name="android:textSize" />
+        <!-- Style (bold, italic, bolditalic) for the text. -->
+        <attr name="android:textStyle" />
+        <!-- Typeface (normal, sans, serif, monospace) for the text. -->
+        <attr name="android:typeface" />
+        <!-- Font family (named by string) for the text. -->
+        <attr name="android:fontFamily" />
+        <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
+        <attr name="android:textAllCaps" />
+        <!-- Place a shadow of the specified color behind the text. -->
+        <attr name="android:shadowColor" />
+        <!-- Horizontal offset of the shadow. -->
+        <attr name="android:shadowDx" />
+        <!-- Vertical offset of the shadow. -->
+        <attr name="android:shadowDy" />
+        <!-- Radius of the shadow. -->
+        <attr name="android:shadowRadius" />
+    </declare-styleable>
 </resources>

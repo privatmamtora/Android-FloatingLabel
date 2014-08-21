@@ -3,4 +3,6 @@
 
     <color name="floatlabel_selected">#ff1b70b3</color>
     <color name="floatlabel_unSelected">#ff000000</color>
+    <color name="floatlabel_shadow">#ffff0000</color>
+    <color name="floatlabel_shadow_16">#ff00ff00</color>
 </resources>
