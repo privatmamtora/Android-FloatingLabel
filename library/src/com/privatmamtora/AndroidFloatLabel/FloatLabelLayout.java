@@ -154,6 +154,8 @@ public class FloatLabelLayout extends FrameLayout {
         //Default Label is Single Line
         setLabelSingleLine(true);
 
+        setLabelGravity(mLabelGravity);
+
         if (mLabelEllipsize < 0) {
             mLabelEllipsize = 3; // END
         }
@@ -255,7 +257,7 @@ public class FloatLabelLayout extends FrameLayout {
 
             //TextView Attributes
             } else if (attr == R.styleable.FloatLabelLayout_flGravity) {
-                setLabelGravity(a.getInt(attr, 0x03));
+                mLabelGravity = a.getInt(attr, 0x03);
 
             } else if (attr == R.styleable.FloatLabelLayout_flText) {
                 mLabelText = a.getText(attr);
@@ -375,59 +377,18 @@ public class FloatLabelLayout extends FrameLayout {
         mHint = mLabelText.length() != 0 ? mLabelText : mEditText.getHint();
         setLabelText(mHint);
 
-        /*if (mHint == null) {
-            mHint = mEditText.getHint();
-        }*/
-
         // Add a TextWatcher so that we know when the text input has changed
-        mEditText.addTextChangedListener(mTextWatcher);
+        //mEditText.addTextChangedListener(mTextWatcher);
+        mEditText.addTextChangedListener(new EditTextWatcher());
 
         // Add focus listener to the EditText so that we can notify the label that it is activated.
         // Allows the use of a ColorStateList for the text color on the label
-        mEditText.setOnFocusChangeListener(mOnFocusChangeListener);
-    }
-
-    private void showLabel(final boolean show) {
-        AnimatorSet animation = null;
-
-        String tranY = "translationY";
-        String a = "alpha";
-
-        if ((mLabel.getVisibility() == VISIBLE) && !show) {
-            animation = new AnimatorSet();
-            ObjectAnimator move = ObjectAnimator.ofFloat(mLabel, tranY, 0,
-                    mLabel.getHeight() / 8);
-            ObjectAnimator fade = ObjectAnimator.ofFloat(mLabel, a, 1, 0);
-            animation.playTogether(move, fade);
-        }
-        else if ((mLabel.getVisibility() != VISIBLE) && show) {
-            animation = new AnimatorSet();
-            ObjectAnimator move = ObjectAnimator.ofFloat(mLabel, tranY,
-                    mLabel.getHeight() / 8, 0);
-            ObjectAnimator fade = ObjectAnimator.ofFloat(mLabel, a, 0, 1);
-            animation.playTogether(move, fade);
-        }
-
-        if (animation != null) {
-            animation.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    super.onAnimationStart(animation);
-                    mLabel.setVisibility(VISIBLE);
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    mLabel.setVisibility(show ? VISIBLE : INVISIBLE);
-                }
-            });
-
-            if(mLabelAnimationDuration >= 0) {
-                animation.setDuration(mLabelAnimationDuration);
+        mEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focused) {
+                mLabel.setActivated(focused);
             }
-            animation.start();
-        }
+        });
     }
 
     /**
@@ -457,6 +418,14 @@ public class FloatLabelLayout extends FrameLayout {
 
     public void setLabelAppearance(Context c, int styleResourceId) {
         mLabel.setTextAppearance(c, styleResourceId);
+    }
+
+    public void setLabelAnimator(LabelAnimator labelAnimator) {
+        if (labelAnimator == null) {
+            mLabelAnimator = new DefaultLabelAnimator();
+        } else {
+            mLabelAnimator = labelAnimator;
+        }
     }
 
     public void setLabelHorizontallyScrolling(boolean whether) {
@@ -541,38 +510,97 @@ public class FloatLabelLayout extends FrameLayout {
     }
 
     /**
-     * Listeners
+     * Animation Instance
      */
-    final private OnFocusChangeListener mOnFocusChangeListener = new OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View view, boolean focused) {
-            if(isHcOrAbove()) {
-                mLabel.setActivated(focused);
-            }
-        }
-    };
-
-    final private TextWatcher mTextWatcher = new TextWatcher() {
-        @Override
-        public void afterTextChanged(Editable s) {
-            showLabel(s.length() != 0);
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-    };
+    private LabelAnimator mLabelAnimator = new DefaultLabelAnimator();
 
     /**
-     * Method to simplify version checking.
+     * Animation interface
      */
-    private static boolean isHcOrAbove() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    public interface LabelAnimator {
+
+        /**
+         * Called when the label should become visible
+         * @param label TextView to animate to visible
+         */
+        public void onDisplayLabel(final View label, int duration);
+
+        /**
+         * Called when the label should become invisible
+         * @param label TextView to animate to invisible
+         */
+        public void onHideLabel(final View label, int duration);
     }
 
+    private static class DefaultLabelAnimator implements LabelAnimator {
+
+        @Override
+        public void onDisplayLabel(final View label, int duration) {
+            showLabel(label, duration, true);
+        }
+
+        @Override
+        public void onHideLabel(final View label, int duration) {
+            showLabel(label, duration, false);
+        }
+
+        private void showLabel(final View label, int duration, final boolean show) {
+            AnimatorSet animation = null;
+            String tranY = "translationY";
+            String a = "alpha";
+
+            int vis = label.getVisibility();
+            if (vis == VISIBLE && !show) {
+                animation = new AnimatorSet();
+                ObjectAnimator move = ObjectAnimator.ofFloat(label, tranY, 0, label.getHeight() / 8);
+                ObjectAnimator fade = ObjectAnimator.ofFloat(label, a, 1, 0);
+                animation.playTogether(move, fade);
+
+            }
+            else if (vis == INVISIBLE && show) {
+                animation = new AnimatorSet();
+                ObjectAnimator move = ObjectAnimator.ofFloat(label, tranY, label.getHeight() / 8, 0);
+                ObjectAnimator fade = ObjectAnimator.ofFloat(label, a, 0, 1);
+                animation.playTogether(move, fade);
+            }
+
+            if (animation != null) {
+                animation.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        //super.onAnimationStart(animation);
+                        label.setVisibility(VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        //super.onAnimationEnd(animation);
+                        label.setVisibility(show ? VISIBLE : INVISIBLE);
+                    }
+                });
+
+                if(duration >= 0) {
+                    animation.setDuration(duration);
+                }
+                animation.start();
+            }
+        }
+    }
+
+    private class EditTextWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (s.length() == 0) {
+                mLabelAnimator.onHideLabel(mLabel, mLabelAnimationDuration);
+            } else {
+                mLabelAnimator.onDisplayLabel(mLabel, mLabelAnimationDuration);
+            }
+        }
+    }
 }
