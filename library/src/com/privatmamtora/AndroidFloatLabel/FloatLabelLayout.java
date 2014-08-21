@@ -45,42 +45,42 @@ import android.widget.TextView;
  *
  * <b>XML attributes</b>
  *
- * @attr ref android.R.styleable#TextAppearance_textColor
- * @attr ref android.R.styleable#TextAppearance_textSize
- * @attr ref android.R.styleable#TextAppearance_typeface
- * @attr ref android.R.styleable#TextAppearance_fontFamily
- * @attr ref android.R.styleable#TextAppearance_textStyle
- * @attr ref android.R.styleable#TextAppearance_textAllCaps
- * @attr ref android.R.styleable#TextAppearance_shadowColor
- * @attr ref android.R.styleable#TextAppearance_shadowDx
- * @attr ref android.R.styleable#TextAppearance_shadowDy
- * @attr ref android.R.styleable#TextAppearance_shadowRadius
+ * android.R.styleable#TextAppearance_textColor
+ * android.R.styleable#TextAppearance_textSize
+ * android.R.styleable#TextAppearance_typeface
+ * android.R.styleable#TextAppearance_fontFamily
+ * android.R.styleable#TextAppearance_textStyle
+ * android.R.styleable#TextAppearance_textAllCaps
+ * android.R.styleable#TextAppearance_shadowColor
+ * android.R.styleable#TextAppearance_shadowDx
+ * android.R.styleable#TextAppearance_shadowDy
+ * android.R.styleable#TextAppearance_shadowRadius
  *
- * @attr ref R.styleable#FloatLabelLayout_flTextColor
- * @attr ref R.styleable#FloatLabelLayout_flTextSize
- * @attr ref R.styleable#FloatLabelLayout_flTypeface
- * @attr ref R.styleable#FloatLabelLayout_flTextStyle
- * @attr ref R.styleable#FloatLabelLayout_flFontFamily
- * @attr ref R.styleable#FloatLabelLayout_flTextAllCaps
- * @attr ref R.styleable#FloatLabelLayout_flShadowColor
- * @attr ref R.styleable#FloatLabelLayout_flShadowDx
- * @attr ref R.styleable#FloatLabelLayout_flShadowDy
- * @attr ref R.styleable#FloatLabelLayout_flShadowRadius
-
+ * R.styleable#FloatLabelLayout_flTextColor
+ * R.styleable#FloatLabelLayout_flTextSize
+ * R.styleable#FloatLabelLayout_flTypeface
+ * R.styleable#FloatLabelLayout_flTextStyle
+ * R.styleable#FloatLabelLayout_flFontFamily
+ * R.styleable#FloatLabelLayout_flTextAllCaps
+ * R.styleable#FloatLabelLayout_flShadowColor
+ * R.styleable#FloatLabelLayout_flShadowDx
+ * R.styleable#FloatLabelLayout_flShadowDy
+ * R.styleable#FloatLabelLayout_flShadowRadius
+ *
  * TextView or View Attributes
- * @attr ref R.styleable#FloatLabelLayout_flGravity
- * @attr ref R.styleable#FloatLabelLayout_flText
- * @attr ref R.styleable#FloatLabelLayout_flScrollHorizontally
- * @attr ref R.styleable#FloatLabelLayout_flEllipsize
- * @attr ref R.styleable#FloatLabelLayout_flIncludeFontPadding
- * @attr ref R.styleable#FloatLabelLayout_flTextScaleX
- * @attr ref R.styleable#FloatLabelLayout_flPadding
- * @attr ref R.styleable#FloatLabelLayout_flPaddingLeft
- * @attr ref R.styleable#FloatLabelLayout_flPaddingRight
- * @attr ref R.styleable#FloatLabelLayout_flPaddingTop
- * @attr ref R.styleable#FloatLabelLayout_flPaddingBottom
- * @attr ref R.styleable#FloatLabelLayout_flGapSize
- * @attr ref R.styleable#FloatLabelLayout_flAnimationDuration
+ * R.styleable#FloatLabelLayout_flGravity
+ * R.styleable#FloatLabelLayout_flText
+ * R.styleable#FloatLabelLayout_flScrollHorizontally
+ * R.styleable#FloatLabelLayout_flEllipsize
+ * R.styleable#FloatLabelLayout_flIncludeFontPadding
+ * R.styleable#FloatLabelLayout_flTextScaleX
+ * R.styleable#FloatLabelLayout_flPadding
+ * R.styleable#FloatLabelLayout_flPaddingLeft
+ * R.styleable#FloatLabelLayout_flPaddingRight
+ * R.styleable#FloatLabelLayout_flPaddingTop
+ * R.styleable#FloatLabelLayout_flPaddingBottom
+ * R.styleable#FloatLabelLayout_flGapSize
+ * R.styleable#FloatLabelLayout_flAnimationDuration
  */
 public class FloatLabelLayout extends FrameLayout {
 
@@ -93,32 +93,35 @@ public class FloatLabelLayout extends FrameLayout {
     private static final int SERIF = 2;
     private static final int MONOSPACE = 3;
 
+    private static final int DEFAULT_TEXT_SIZE = 14;
+
     private EditText mEditText;
     private TextView mLabel;
 
     // Text Appearance
-    private ColorStateList mLabelTextColor;
-    private int mLabelTextSize;
-    private int mLabelTypeface;
-    private String mLabelFontFamily;
-    private int mLabelTextStyle;
-    private boolean mLabelAllCaps;
-    private int mLabelShadowColor;
-    private float mLabelShadowDx;
-    private float mLabelShadowDy;
-    private float mLabelShadowRadius;
+    //
+    private ColorStateList mLabelTextColor = null;
+    private int mLabelTextSize = DEFAULT_TEXT_SIZE;
+    private int mLabelTypeface = -1;
+    private String mLabelFontFamily = null;
+    private int mLabelTextStyle = -1;
+    private boolean mLabelAllCaps = false;
+    private int mLabelShadowColor = 0;
+    private float mLabelShadowDx = 0;
+    private float mLabelShadowDy = 0;
+    private float mLabelShadowRadius = 0;
 
-    private int mLabelPadding;
-    private int mLabelPaddingLeft;
-    private int mLabelPaddingRight;
-    private int mLabelPaddingTop;
-    private int mLabelPaddingBottom;
+    private int mLabelPadding = 0;
+    private int mLabelPaddingLeft = 0;
+    private int mLabelPaddingRight = 0;
+    private int mLabelPaddingTop = 0;
+    private int mLabelPaddingBottom = 0;
 
-    private int mLabelGravity;
+    private int mLabelGravity = 0x03;
     private CharSequence mLabelText = "";
-    private int mLabelEllipsize;
+    private int mLabelEllipsize = -1;
 
-    private int mLabelGap;
+    private int mLabelGap = 0;
     private int mLabelAnimationDuration = -1;
 
     private CharSequence mHint;
@@ -165,10 +168,7 @@ public class FloatLabelLayout extends FrameLayout {
 
         setLabelColor(mLabelTextColor != null ? mLabelTextColor : getResources().getColorStateList(R.color.floatlabel_default));
         setLabelSize(mLabelTextSize);
-
-        if(mLabelAllCaps) {
-            setLabelAllCaps(mLabelAllCaps);
-        }
+        setLabelAllCaps(mLabelAllCaps);
 
         setTypefaceFromAttrs(mLabelFontFamily, mLabelTypeface, mLabelTextStyle);
 
@@ -190,7 +190,7 @@ public class FloatLabelLayout extends FrameLayout {
 
         final TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.FloatLabelLayout);
 
-        int styleResId = a.getResourceId(R.styleable.FloatLabelLayout_flTextAppearance, android.R.style.TextAppearance_Small);
+        int styleResId = a.getResourceId(R.styleable.FloatLabelLayout_flTextAppearance, -1);
         setupTextAppearanceAttr(styleResId);
 
         setupCustomAttr(a);
@@ -199,20 +199,22 @@ public class FloatLabelLayout extends FrameLayout {
     }
 
     private void setupTextAppearanceAttr(int styleResourceId) {
-        final TypedArray appearance = mContext.obtainStyledAttributes(styleResourceId, R.styleable.TextAppearance);
+        if(styleResourceId != -1) {
+            final TypedArray appearance = mContext.obtainStyledAttributes(styleResourceId, R.styleable.TextAppearance);
 
-        mLabelTextColor = appearance.getColorStateList(R.styleable.TextAppearance_android_textColor);
-        mLabelTextSize = appearance.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, 14);
-        mLabelTypeface = appearance.getInt(R.styleable.TextAppearance_android_typeface, -1);
-        mLabelFontFamily = appearance.getString(R.styleable.TextAppearance_android_fontFamily);
-        mLabelTextStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, -1);
-        mLabelAllCaps = appearance.getBoolean(R.styleable.TextAppearance_android_textAllCaps, false);
-        mLabelShadowColor = appearance.getInt(R.styleable.TextAppearance_android_shadowColor, 0);
-        mLabelShadowDx = appearance.getFloat(R.styleable.TextAppearance_android_shadowDx, 0);
-        mLabelShadowDy = appearance.getFloat(R.styleable.TextAppearance_android_shadowDy, 0);
-        mLabelShadowRadius = appearance.getFloat(R.styleable.TextAppearance_android_shadowRadius, 0);
+            mLabelTextColor = appearance.getColorStateList(R.styleable.TextAppearance_android_textColor);
+            mLabelTextSize = appearance.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, mLabelTextSize);
+            mLabelTypeface = appearance.getInt(R.styleable.TextAppearance_android_typeface, mLabelTypeface);
+            mLabelFontFamily = appearance.getString(R.styleable.TextAppearance_android_fontFamily);
+            mLabelTextStyle = appearance.getInt(R.styleable.TextAppearance_android_textStyle, mLabelTextStyle);
+            mLabelAllCaps = appearance.getBoolean(R.styleable.TextAppearance_android_textAllCaps, mLabelAllCaps);
+            mLabelShadowColor = appearance.getInt(R.styleable.TextAppearance_android_shadowColor, mLabelShadowColor);
+            mLabelShadowDx = appearance.getFloat(R.styleable.TextAppearance_android_shadowDx, mLabelShadowDx);
+            mLabelShadowDy = appearance.getFloat(R.styleable.TextAppearance_android_shadowDy, mLabelShadowDy);
+            mLabelShadowRadius = appearance.getFloat(R.styleable.TextAppearance_android_shadowRadius, mLabelShadowRadius);
 
-        appearance.recycle();
+            appearance.recycle();
+        }
     }
 
     private void setupCustomAttr(TypedArray a) {
@@ -387,18 +389,22 @@ public class FloatLabelLayout extends FrameLayout {
 
     private void showLabel(final boolean show) {
         AnimatorSet animation = null;
+
+        String tranY = "translationY";
+        String a = "alpha";
+
         if ((mLabel.getVisibility() == VISIBLE) && !show) {
             animation = new AnimatorSet();
-            ObjectAnimator move = ObjectAnimator.ofFloat(mLabel, "translationY", 0,
+            ObjectAnimator move = ObjectAnimator.ofFloat(mLabel, tranY, 0,
                     mLabel.getHeight() / 8);
-            ObjectAnimator fade = ObjectAnimator.ofFloat(mLabel, "alpha", 1, 0);
+            ObjectAnimator fade = ObjectAnimator.ofFloat(mLabel, a, 1, 0);
             animation.playTogether(move, fade);
         }
         else if ((mLabel.getVisibility() != VISIBLE) && show) {
             animation = new AnimatorSet();
-            ObjectAnimator move = ObjectAnimator.ofFloat(mLabel, "translationY",
+            ObjectAnimator move = ObjectAnimator.ofFloat(mLabel, tranY,
                     mLabel.getHeight() / 8, 0);
-            ObjectAnimator fade = ObjectAnimator.ofFloat(mLabel, "alpha", 0, 1);
+            ObjectAnimator fade = ObjectAnimator.ofFloat(mLabel, a, 0, 1);
             animation.playTogether(move, fade);
         }
 
@@ -427,14 +433,14 @@ public class FloatLabelLayout extends FrameLayout {
     /**
      * @return the {@link android.widget.EditText} text input
      */
-    public EditText getEditText() {
+    public final EditText getEditText() {
         return mEditText;
     }
 
     /**
      * @return the {@link android.widget.TextView} label
      */
-    public TextView getLabel() {
+    public final TextView getLabel() {
         return mLabel;
     }
 

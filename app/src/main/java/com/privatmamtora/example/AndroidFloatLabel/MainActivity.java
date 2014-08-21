@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.privatmamtora.AndroidFloatLabel.FloatLabelLayout;
 
@@ -19,6 +20,7 @@ public class MainActivity extends ActionBarActivity {
         FloatLabelLayout f = (FloatLabelLayout) findViewById(R.id.f4);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "RobotoCondensed-LightItalic.ttf");
         f.setLabelTypeface(typeface);
+        TextView tv = f.getLabel();
     }
 
     @Override

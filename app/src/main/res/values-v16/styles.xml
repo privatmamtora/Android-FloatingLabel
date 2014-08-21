@@ -6,7 +6,7 @@
         <item name="android:textSize">8dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">serif</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:shadowColor">@color/floatlabel_shadow_16</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:shadowDx">5</item>

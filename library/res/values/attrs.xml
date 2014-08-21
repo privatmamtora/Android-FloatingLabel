@@ -83,19 +83,8 @@
         </attr>
         <!-- Color of label text. -->
         <attr name="flTextColor" format="reference|color" />
-
-        <!--TextView Layout Positioning Attributes-->
-        <attr name="flPadding" format="dimension" />
-        <attr name="flPaddingLeft" format="dimension" />
-        <attr name="flPaddingRight" format="dimension" />
-        <attr name="flPaddingTop" format="dimension" />
-        <attr name="flPaddingBottom" format="dimension" />
-        <!--<attr name="flPaddingStart" format="reference|dimension" />
-        <attr name="flPaddingEnd" format="reference|dimension" />-->
-        <attr name="flGapSize" format="reference|dimension" />
-		<!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
+        <!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
         <attr name="flTextSize" format="dimension" />
-
         <!-- Place a shadow of the specified color behind the text. -->
         <attr name="flShadowColor" format="color" />
         <!-- Horizontal offset of the shadow. -->
@@ -106,6 +95,17 @@
         <attr name="flShadowRadius" format="float" />
         <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
         <attr name="flTextAllCaps" format="boolean" />
+
+        <!--TextView Layout Positioning Attributes-->
+        <attr name="flPadding" format="dimension" />
+        <attr name="flPaddingLeft" format="dimension" />
+        <attr name="flPaddingRight" format="dimension" />
+        <attr name="flPaddingTop" format="dimension" />
+        <attr name="flPaddingBottom" format="dimension" />
+        <!--<attr name="flPaddingStart" format="reference|dimension" />
+        <attr name="flPaddingEnd" format="reference|dimension" />-->
+
+        <attr name="flGapSize" format="reference|dimension" />
 
         <!--Label Animation Attributes-->
         <attr name="flAnimationDuration" format="integer" />
