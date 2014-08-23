@@ -82,13 +82,13 @@ The Custom Attributes are equivalent to their Original Attribute versions
 Non-Default Behavior
 ====================
 
-1. Padding
+1) Padding
  * flPaddingLeft
  * flPaddingRight
  
 Both these attributes will take into account the SDK version. If the SDK version is 17 above it will automatically use the <code>flPaddingLeft</code> value as <code>paddingStart</code>. Same for <code>flPaddingRight</code>.
 
-2. Text Color
+2) Text Color
  * flTextColor (or android:textColor in style)
  
 In the absence of a color being defined,  the follow color will be applied by default. (In the future, I am planing to make it default to accent color)
@@ -102,8 +102,8 @@ In the absence of a color being defined,  the follow color will be applied by de
 </selector>
 ```
 
-3. Single Line
- The label by default is set as a single line.
+3) Single Line
+ <p>The label by default is set as a single line.</p>
 
 #####Original Concept
 
