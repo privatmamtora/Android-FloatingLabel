@@ -12,7 +12,7 @@ I am going to try add some more features for the floating label custom view.
  <li><strong>Original Attributes</strong>: Original Android Attributes</li>
 </ol>
 
-<h1>Available Attributes</h1>
+<h2>Available Attributes</h2>
 
 The Custom Attributes are equivalent to their Original Attribute versions
 
@@ -31,7 +31,7 @@ The Custom Attributes are equivalent to their Original Attribute versions
 * flTextScaleX
 
 
-<h2>Text Appearance Attributes</h2>
+<h3>Text Appearance Attributes</h3>
 
 * flFontFamily
 * flTypeface
@@ -46,7 +46,7 @@ The Custom Attributes are equivalent to their Original Attribute versions
 
 * flTextAppearance (Takes a reference to style. But the style can only have the equivalent Original Attributes of the attributes listed above (Under Text Apprearance)
 
-<h1>Example</h1>
+<h2>Example</h2>
   **Layout**
 ```XML
 <FloatLabel
@@ -79,16 +79,15 @@ The Custom Attributes are equivalent to their Original Attribute versions
 <p><b>Notice</b> how the style is defined with original attributes. Any custom attributes defined in the layout will overwrite the original style attribute. So the FloatLabel defined above will have a textSize of 16sp instead of the 8sp defined in the style.</p>
 
 
-Non-Default Behavior
-====================
+<h2>Non-Default Behavior</h2>
 
-1. Padding
+1) Padding
  * flPaddingLeft
  * flPaddingRight
  
 Both these attributes will take into account the SDK version. If the SDK version is 17 above it will automatically use the <code>flPaddingLeft</code> value as <code>paddingStart</code>. Same for <code>flPaddingRight</code>.
 
-2. Text Color
+2) Text Color
  * flTextColor (or android:textColor in style)
  
 In the absence of a color being defined,  the follow color will be applied by default. (In the future, I am planing to make it default to accent color)
@@ -102,9 +101,9 @@ In the absence of a color being defined,  the follow color will be applied by de
 </selector>
 ```
 
-3. Single Line
- The label by default is set as a single line.
+3) Single Line
+ <p>The label by default is set as a single line.</p>
 
-#####Original Concept
+<h2>Original Concept</h2>
 
 Chris Banes' FloatLabelLayout(Gist) idea where custom view is simply a wrapper.
