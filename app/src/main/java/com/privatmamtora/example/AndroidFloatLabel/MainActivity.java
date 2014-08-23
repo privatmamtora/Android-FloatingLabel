@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.privatmamtora.AndroidFloatLabel.FloatLabelLayout;
+import com.privatmamtora.AndroidFloatLabel.LabelAnimator;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -22,11 +23,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatLabelLayout f = (FloatLabelLayout) findViewById(R.id.f4);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "RobotoCondensed-LightItalic.ttf");
-        f.setLabelTypeface(typeface);
-        TextView tv = f.getLabel();
-        f.setLabelAnimator(new NewLabelAnimation());
+        setupLabels();
     }
 
     @Override
@@ -48,7 +45,19 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private static class NewLabelAnimation implements FloatLabelLayout.LabelAnimator {
+    private void setupLabels() {
+        FloatLabelLayout f = (FloatLabelLayout) findViewById(R.id.f4);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "RobotoCondensed-LightItalic.ttf");
+        f.setLabelTypeface(typeface);
+        TextView tv = f.getLabel();
+        f.setLabelAnimator(new NewLabelAnimation());
+
+    }
+
+    private static class NewLabelAnimation implements LabelAnimator {
+
+        private NewLabelAnimation() {
+        }
 
         @Override
         public void onDisplayLabel(final View label, int duration) {

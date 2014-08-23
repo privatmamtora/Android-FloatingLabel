@@ -15,10 +15,6 @@
  */
 package com.privatmamtora.AndroidFloatLabel;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -31,7 +27,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -497,95 +492,9 @@ public class FloatLabelLayout extends FrameLayout {
     }
 
     /**
-     * Helper method to convert dips to pixels.
-     */
-    private int dipsToPix(float dps) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dps,
-                getResources().getDisplayMetrics());
-    }
-
-    private int spToPix(float sps) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sps,
-                getResources().getDisplayMetrics());
-    }
-
-    /**
      * Animation Instance
      */
     private LabelAnimator mLabelAnimator = new DefaultLabelAnimator();
-
-    /**
-     * Animation interface
-     */
-    public interface LabelAnimator {
-
-        /**
-         * Called when the label should become visible
-         * @param label TextView to animate to visible
-         */
-        public void onDisplayLabel(final View label, int duration);
-
-        /**
-         * Called when the label should become invisible
-         * @param label TextView to animate to invisible
-         */
-        public void onHideLabel(final View label, int duration);
-    }
-
-    private static class DefaultLabelAnimator implements LabelAnimator {
-
-        @Override
-        public void onDisplayLabel(final View label, int duration) {
-            showLabel(label, duration, true);
-        }
-
-        @Override
-        public void onHideLabel(final View label, int duration) {
-            showLabel(label, duration, false);
-        }
-
-        private void showLabel(final View label, int duration, final boolean show) {
-            AnimatorSet animation = null;
-            String tranY = "translationY";
-            String a = "alpha";
-
-            int vis = label.getVisibility();
-            if (vis == VISIBLE && !show) {
-                animation = new AnimatorSet();
-                ObjectAnimator move = ObjectAnimator.ofFloat(label, tranY, 0, label.getHeight() / 8);
-                ObjectAnimator fade = ObjectAnimator.ofFloat(label, a, 1, 0);
-                animation.playTogether(move, fade);
-
-            }
-            else if (vis == INVISIBLE && show) {
-                animation = new AnimatorSet();
-                ObjectAnimator move = ObjectAnimator.ofFloat(label, tranY, label.getHeight() / 8, 0);
-                ObjectAnimator fade = ObjectAnimator.ofFloat(label, a, 0, 1);
-                animation.playTogether(move, fade);
-            }
-
-            if (animation != null) {
-                animation.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                        //super.onAnimationStart(animation);
-                        label.setVisibility(VISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        //super.onAnimationEnd(animation);
-                        label.setVisibility(show ? VISIBLE : INVISIBLE);
-                    }
-                });
-
-                if(duration >= 0) {
-                    animation.setDuration(duration);
-                }
-                animation.start();
-            }
-        }
-    }
 
     private class EditTextWatcher implements TextWatcher {
         @Override
