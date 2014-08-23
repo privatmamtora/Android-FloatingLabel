@@ -10,7 +10,7 @@
     android:orientation="vertical"
     tools:context="com.privatmamtora.example.AndroidFloatLabel.MainActivity">
 
-    <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
+    <com.privatmamtora.AndroidFloatLabel.FloatLabel
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         float:flAnimationDuration="800"
@@ -25,9 +25,9 @@
             android:hint="MultiLine/Style/AniDur"
             android:inputType="textNoSuggestions|textMultiLine"
             android:singleLine="false"/>
-    </com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
+    </com.privatmamtora.AndroidFloatLabel.FloatLabel>
 
-    <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
+    <com.privatmamtora.AndroidFloatLabel.FloatLabel
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         float:flGravity="right"
@@ -43,9 +43,9 @@
             android:singleLine="true"
             android:inputType="textNoSuggestions"
             android:imeOptions="actionDone" />
-    </com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
+    </com.privatmamtora.AndroidFloatLabel.FloatLabel>
 
-    <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
+    <com.privatmamtora.AndroidFloatLabel.FloatLabel
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         float:flGravity="center"
@@ -61,9 +61,9 @@
             android:singleLine="true"
             android:inputType="textNoSuggestions"
             android:imeOptions="actionDone"/>
-    </com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
+    </com.privatmamtora.AndroidFloatLabel.FloatLabel>
 
-    <com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
+    <com.privatmamtora.AndroidFloatLabel.FloatLabel
         android:id="@+id/f4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -76,5 +76,5 @@
             android:singleLine="true"
             android:inputType="textNoSuggestions"
             android:imeOptions="actionDone" />
-    </com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
+    </com.privatmamtora.AndroidFloatLabel.FloatLabel>
 </LinearLayout>

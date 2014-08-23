@@ -49,7 +49,7 @@ The Custom Attributes are equivalent to their Original Attribute versions
 <h1>Example</h1>
   **Layout**
 ```XML
-<com.privatmamtora.AndroidFloatLabel.FloatLabelLayout
+<FloatLabel
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     float:flTextSize="16sp"
@@ -60,7 +60,7 @@ The Custom Attributes are equivalent to their Original Attribute versions
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Edit 3"/>
-</com.privatmamtora.AndroidFloatLabel.FloatLabelLayout>
+</FloatLabel>
 ```
   **Style.xml**
 ```XML

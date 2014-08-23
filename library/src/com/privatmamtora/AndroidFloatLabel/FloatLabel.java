@@ -51,33 +51,33 @@ import android.widget.TextView;
  * android.R.styleable#TextAppearance_shadowDy
  * android.R.styleable#TextAppearance_shadowRadius
  * <p/>
- * R.styleable#FloatLabelLayout_flTextColor
- * R.styleable#FloatLabelLayout_flTextSize
- * R.styleable#FloatLabelLayout_flTypeface
- * R.styleable#FloatLabelLayout_flTextStyle
- * R.styleable#FloatLabelLayout_flFontFamily
- * R.styleable#FloatLabelLayout_flTextAllCaps
- * R.styleable#FloatLabelLayout_flShadowColor
- * R.styleable#FloatLabelLayout_flShadowDx
- * R.styleable#FloatLabelLayout_flShadowDy
- * R.styleable#FloatLabelLayout_flShadowRadius
+ * R.styleable#FloatLabel_flTextColor
+ * R.styleable#FloatLabel_flTextSize
+ * R.styleable#FloatLabel_flTypeface
+ * R.styleable#FloatLabel_flTextStyle
+ * R.styleable#FloatLabel_flFontFamily
+ * R.styleable#FloatLabel_flTextAllCaps
+ * R.styleable#FloatLabel_flShadowColor
+ * R.styleable#FloatLabel_flShadowDx
+ * R.styleable#FloatLabel_flShadowDy
+ * R.styleable#FloatLabel_flShadowRadius
  * <p/>
  * TextView or View Attributes
- * R.styleable#FloatLabelLayout_flGravity
- * R.styleable#FloatLabelLayout_flText
- * R.styleable#FloatLabelLayout_flScrollHorizontally
- * R.styleable#FloatLabelLayout_flEllipsize
- * R.styleable#FloatLabelLayout_flIncludeFontPadding
- * R.styleable#FloatLabelLayout_flTextScaleX
- * R.styleable#FloatLabelLayout_flPadding
- * R.styleable#FloatLabelLayout_flPaddingLeft
- * R.styleable#FloatLabelLayout_flPaddingRight
- * R.styleable#FloatLabelLayout_flPaddingTop
- * R.styleable#FloatLabelLayout_flPaddingBottom
- * R.styleable#FloatLabelLayout_flGapSize
- * R.styleable#FloatLabelLayout_flAnimationDuration
+ * R.styleable#FloatLabel_flGravity
+ * R.styleable#FloatLabel_flText
+ * R.styleable#FloatLabel_flScrollHorizontally
+ * R.styleable#FloatLabel_flEllipsize
+ * R.styleable#FloatLabel_flIncludeFontPadding
+ * R.styleable#FloatLabel_flTextScaleX
+ * R.styleable#FloatLabel_flPadding
+ * R.styleable#FloatLabel_flPaddingLeft
+ * R.styleable#FloatLabel_flPaddingRight
+ * R.styleable#FloatLabel_flPaddingTop
+ * R.styleable#FloatLabel_flPaddingBottom
+ * R.styleable#FloatLabel_flGapSize
+ * R.styleable#FloatLabel_flAnimationDuration
  */
-public class FloatLabelLayout extends FrameLayout {
+public class FloatLabel extends FrameLayout {
 
 	private static final String SAVED_SUPER_STATE = "SAVED_SUPER_STATE";
 	private static final String SAVED_LABEL_VISIBILITY = "SAVED_LABEL_VISIBILITY";
@@ -123,19 +123,19 @@ public class FloatLabelLayout extends FrameLayout {
 
 	private Context mContext;
 
-	public FloatLabelLayout(Context context) {
+	public FloatLabel(Context context) {
 		super(context);
 		mContext = context;
 	}
 
-	public FloatLabelLayout(Context context, AttributeSet attrs) {
+	public FloatLabel(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
 		setupLabel(attrs);
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public FloatLabelLayout(Context context, AttributeSet attrs, int defStyle) {
+	public FloatLabel(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mContext = context;
 		setupLabel(attrs);
@@ -185,9 +185,9 @@ public class FloatLabelLayout extends FrameLayout {
 
 	private void setupAttributes(AttributeSet attrs) {
 
-		final TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.FloatLabelLayout);
+		final TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.FloatLabel);
 
-		int styleResId = a.getResourceId(R.styleable.FloatLabelLayout_flTextAppearance, -1);
+		int styleResId = a.getResourceId(R.styleable.FloatLabel_flTextAppearance, -1);
 		setupTextAppearanceAttr(styleResId);
 
 		setupCustomAttr(a);
@@ -220,73 +220,73 @@ public class FloatLabelLayout extends FrameLayout {
 			int attr = a.getIndex(i);
 
 			//TextAppearance Attributes
-			if (attr == R.styleable.FloatLabelLayout_flTextColor) {
+			if (attr == R.styleable.FloatLabel_flTextColor) {
 				mLabelTextColor = a.getColorStateList(attr);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flTextSize) {
+			} else if (attr == R.styleable.FloatLabel_flTextSize) {
 				mLabelTextSize = a.getDimensionPixelSize(attr, mLabelTextSize);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flTypeface) {
+			} else if (attr == R.styleable.FloatLabel_flTypeface) {
 				mLabelTypeface = a.getInt(attr, mLabelTypeface);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flTextStyle) {
+			} else if (attr == R.styleable.FloatLabel_flTextStyle) {
 				mLabelTextStyle = a.getInt(attr, mLabelTextStyle);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flFontFamily) {
+			} else if (attr == R.styleable.FloatLabel_flFontFamily) {
 				mLabelFontFamily = a.getString(attr);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flTextAllCaps) {
+			} else if (attr == R.styleable.FloatLabel_flTextAllCaps) {
 				mLabelAllCaps = a.getBoolean(attr, mLabelAllCaps);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flShadowColor) {
+			} else if (attr == R.styleable.FloatLabel_flShadowColor) {
 				mLabelShadowColor = a.getInt(attr, mLabelShadowColor);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flShadowDx) {
+			} else if (attr == R.styleable.FloatLabel_flShadowDx) {
 				mLabelShadowDx = a.getFloat(attr, mLabelShadowDx);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flShadowDy) {
+			} else if (attr == R.styleable.FloatLabel_flShadowDy) {
 				mLabelShadowDy = a.getFloat(attr, mLabelShadowDy);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flShadowRadius) {
+			} else if (attr == R.styleable.FloatLabel_flShadowRadius) {
 				mLabelShadowRadius = a.getFloat(attr, mLabelShadowRadius);
 
 				//TextView Attributes
-			} else if (attr == R.styleable.FloatLabelLayout_flGravity) {
+			} else if (attr == R.styleable.FloatLabel_flGravity) {
 				mLabelGravity = a.getInt(attr, 0x03);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flText) {
+			} else if (attr == R.styleable.FloatLabel_flText) {
 				mLabelText = a.getText(attr);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flScrollHorizontally) {
+			} else if (attr == R.styleable.FloatLabel_flScrollHorizontally) {
 				if (a.getBoolean(attr, false)) {
 					setLabelHorizontallyScrolling(true);
 				}
 
-			} else if (attr == R.styleable.FloatLabelLayout_flEllipsize) {
+			} else if (attr == R.styleable.FloatLabel_flEllipsize) {
 				mLabelEllipsize = a.getInt(attr, -1);
 
-			} else if (attr == R.styleable.FloatLabelLayout_flIncludeFontPadding) {
+			} else if (attr == R.styleable.FloatLabel_flIncludeFontPadding) {
 				if (!a.getBoolean(attr, true)) {
 					setLabelIncludeFontPadding(false);
 				}
 
-			} else if (attr == R.styleable.FloatLabelLayout_flTextScaleX) {
+			} else if (attr == R.styleable.FloatLabel_flTextScaleX) {
 				setLabelTextScaleX(a.getFloat(attr, 1.0f));
 
 				//View Attributes
-			} else if (attr == R.styleable.FloatLabelLayout_flPadding) {
+			} else if (attr == R.styleable.FloatLabel_flPadding) {
 				mLabelPadding = a.getDimensionPixelSize(attr, 0);
-			} else if (attr == R.styleable.FloatLabelLayout_flPaddingLeft) {
+			} else if (attr == R.styleable.FloatLabel_flPaddingLeft) {
 				mLabelPaddingLeft = a.getDimensionPixelSize(attr, mLabelPadding);
-			} else if (attr == R.styleable.FloatLabelLayout_flPaddingRight) {
+			} else if (attr == R.styleable.FloatLabel_flPaddingRight) {
 				mLabelPaddingRight = a.getDimensionPixelSize(attr, mLabelPadding);
-			} else if (attr == R.styleable.FloatLabelLayout_flPaddingTop) {
+			} else if (attr == R.styleable.FloatLabel_flPaddingTop) {
 				mLabelPaddingTop = a.getDimensionPixelSize(attr, mLabelPadding);
-			} else if (attr == R.styleable.FloatLabelLayout_flPaddingBottom) {
+			} else if (attr == R.styleable.FloatLabel_flPaddingBottom) {
 				mLabelPaddingBottom = a.getDimensionPixelSize(attr, mLabelPadding);
-			} else if (attr == R.styleable.FloatLabelLayout_flGapSize) {
+			} else if (attr == R.styleable.FloatLabel_flGapSize) {
 				mLabelGap = a.getDimensionPixelSize(attr, 0);
-			} else if (attr == R.styleable.FloatLabelLayout_flAnimationDuration) {
+			} else if (attr == R.styleable.FloatLabel_flAnimationDuration) {
 				mLabelAnimationDuration = a.getInt(attr, -1);
 			}
 		}

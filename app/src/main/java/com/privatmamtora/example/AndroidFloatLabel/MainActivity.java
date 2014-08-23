@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.privatmamtora.AndroidFloatLabel.FloatLabelLayout;
+import com.privatmamtora.AndroidFloatLabel.FloatLabel;
 import com.privatmamtora.AndroidFloatLabel.LabelAnimator;
 
 
@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setupLabels() {
-        FloatLabelLayout f = (FloatLabelLayout) findViewById(R.id.f4);
+        FloatLabel f = (FloatLabel) findViewById(R.id.f4);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "RobotoCondensed-LightItalic.ttf");
         f.setLabelTypeface(typeface);
         TextView tv = f.getLabel();

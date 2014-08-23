@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="FloatLabelLayout">
+    <declare-styleable name="FloatLabel">
         <!-- Specifies how an object should position its content, on both the X and Y axes,
          within its own bounds.  -->
         <attr name="flGravity">
